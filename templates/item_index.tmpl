@@ -1,0 +1,32 @@
+<html>
+<h1>
+    {{ .title }}
+</h1>
+
+<body>
+<table style="border-spacing: 10px; text-align: center;">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Amount</th>
+        <th>Category</th>
+        <th>CreatedAt</th>
+        <th colspan="2"></th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+    {{ range .items }}
+    <tr>
+        <td>{{ .Name }}</td>
+        <td>{{ .Amount }}</td>
+        <td>{{ .Category }}</td>
+        <td>{{ .CreatedAt }}</td>
+    </tr>
+    {{ end }}
+
+    </tbody>
+</table>
+</body>
+</html>
