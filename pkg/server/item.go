@@ -3,6 +3,7 @@ package server
 import (
 	"fmt"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 
@@ -26,6 +27,22 @@ func GetApiItems(c *gin.Context) {
 	} else {
 		c.JSON(http.StatusOK, items)
 	}
+}
+
+func GetApiItem(c *gin.Context) (item models.Item) {
+	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
+	if err != nil {
+		fmt.Printf("err=%s\n", err)
+		return
+	}
+	db := database.GetDB()
+	if err := db.Preload("Category").
+		Where("item.id = ?", id).
+		Find(&item).Error; err != nil {
+		fmt.Printf("err=%s\n", err)
+	}
+	c.JSON(http.StatusOK, item)
+	return
 }
 
 func PostApiItem(c *gin.Context) {

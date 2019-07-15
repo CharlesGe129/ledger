@@ -13,7 +13,7 @@ var err error
 func GetDB() *gorm.DB {
 	var once sync.Once
 	once.Do(func() {
-		dbStr := "root:root@tcp(127.0.0.1:3306)/ledger?charset=utf8&parseTime=True&loc=Local"
+		dbStr := "root:toor123@tcp(127.0.0.1:33600)/ledger?charset=utf8&parseTime=True&loc=Local"
 		db, err = gorm.Open("mysql", dbStr)
 		if err != nil {
 			panic(err)

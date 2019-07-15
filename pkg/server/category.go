@@ -2,6 +2,8 @@ package server
 
 import (
 	"fmt"
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 	"ledger/pkg/database"
 	"ledger/pkg/models"
@@ -13,4 +15,8 @@ func GetCategories(c *gin.Context) (cats []models.Category) {
 		fmt.Printf("err=%s", err)
 	}
 	return
+}
+
+func GetCats(c *gin.Context) {
+	c.JSON(http.StatusOK, GetCategories(nil))
 }

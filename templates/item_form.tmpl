@@ -1,0 +1,25 @@
+{{ define "item_form" }}
+
+<h4>Name:</h4>
+<input name="name" value="{{ .item.Name }}"><br>
+
+<h4>Amount:</h4>
+<input name="amount" value="{{ .item.Amount }}"><br>
+
+<h4>Category:</h4>
+
+{{ $category_id := .item.CategoryId }}
+<select name="category_id">
+{{ range .categories }}
+    {{ if eq $category_id .Id }}
+        <option value="{{ .Id }}" selected>{{ .Name }}</option>
+    {{ else }}
+        <option value="{{ .Id }}">{{ .Name }}</option>
+    {{ end }}
+{{ end }}
+</select><br>
+
+<br>
+
+<input type="submit" value="Submit">
+{{ end }}
