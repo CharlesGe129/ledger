@@ -19,7 +19,6 @@ func index(c *gin.Context) {
 
 func itemIndex(c *gin.Context) {
 	c.HTML(http.StatusOK, "item_index.tmpl", gin.H{
-		"title": "Expenses",
 		"items": server.GetItems(c),
 	})
 }

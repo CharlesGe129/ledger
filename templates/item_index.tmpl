@@ -1,9 +1,9 @@
 <html>
-<h1>
-    {{ .title }}
-</h1>
-
 <body>
+<h1>
+    Expenses
+</h1>
+<a href="/item/new" style="font-size: 1rem;">Add new</a>
 <table style="border-spacing: 10px; text-align: center;">
     <thead>
     <tr>
@@ -21,7 +21,7 @@
     <tr>
         <td>{{ .Name }}</td>
         <td>{{ .Amount }}</td>
-        <td>{{ .Category }}</td>
+        <td>{{ .Category.Name }}</td>
         <td>{{ .CreatedAt }}</td>
     </tr>
     {{ end }}
