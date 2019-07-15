@@ -40,6 +40,7 @@ func main() {
 	r.GET("/item", itemIndex)
 
 	r.GET("/api/item", server.GetApiItems)
+	r.POST("/api/item", server.PostApiItem)
 
 	//r.GET("/api/category", server.GetCategories)
 	//r.POST("/api/category", server.CreateCategories)

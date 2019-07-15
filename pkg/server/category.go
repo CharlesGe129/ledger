@@ -14,11 +14,3 @@ func GetCategories(c *gin.Context) (cats []models.Category) {
 	}
 	return
 }
-
-
-func CreateCategories(c *gin.Context) {
-	var cat models.Category
-	c.BindJSON(&cat)
-
-	database.GetDB().Create(&cat)
-}
