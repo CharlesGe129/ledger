@@ -39,3 +39,15 @@ func PostApiItem(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, item)
 }
+
+func PutApiItem(c *gin.Context) {
+	var item models.Item
+	if err := c.ShouldBindJSON(&item); err != nil {
+		fmt.Printf("err=%s\n", err)
+	}
+	db := database.GetDB()
+	if err := db.Update(&item).Error; err != nil {
+		fmt.Printf("err=%s\n", err)
+	}
+	c.JSON(http.StatusOK, item)
+}
