@@ -1,14 +1,15 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
-	"github.com/jinzhu/gorm"
-	"ledger/pkg/database"
-	"ledger/pkg/models"
-	"ledger/pkg/server"
 	"html/template"
 	"net/http"
 	"time"
+
+	"github.com/gin-gonic/gin"
+	"github.com/jinzhu/gorm"
+
+	"ledger/pkg/database"
+	"ledger/pkg/server"
 )
 
 var db *gorm.DB
@@ -16,26 +17,6 @@ var db *gorm.DB
 func index(c *gin.Context) {
 	c.HTML(http.StatusOK, "index.tmpl", gin.H{
 		"title": "Hello World",
-	})
-}
-
-func itemIndex(c *gin.Context) {
-	c.HTML(http.StatusOK, "item_index.tmpl", gin.H{
-		"items": server.GetItems(c),
-	})
-}
-
-func itemNew(c *gin.Context) {
-	c.HTML(http.StatusOK, "item_new.tmpl", gin.H{
-		"item": models.Item{},
-		"categories": server.GetCategories(c),
-	})
-}
-
-func itemUpdate(c *gin.Context) {
-	c.HTML(http.StatusOK, "item_new.tmpl", gin.H{
-		"item": server.GetApiItem(c),
-		"categories": server.GetCategories(c),
 	})
 }
 
@@ -61,15 +42,16 @@ func main() {
 	database.GetDB()
 
 	r.GET("/", index)
-	r.GET("/item", itemIndex)
-	r.GET("/item/new", itemNew)
-	r.PUT("/item/update", itemUpdate)
+	r.GET("/item", server.ItemIndex)
+	r.GET("/item/new", server.ItemNew)
+	r.GET("/item/edit/:id", server.ItemUpdate)
 
 	apiRoutes := r.Group("/api")
 	{
 		apiRoutes.GET("/item", server.GetApiItems)
 		apiRoutes.POST("/item", server.PostApiItem)
 		apiRoutes.PUT("/item", server.PutApiItem)
+		apiRoutes.GET("/item/delete/:id", server.DeleteApiItem)
 
 		apiRoutes.GET("/cats", server.GetCats)
 	}

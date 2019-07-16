@@ -23,6 +23,8 @@
         <td>{{ .Amount }}</td>
         <td>{{ .Category.Name }}</td>
         <td>{{ .CreatedAt | formatAsDate }}</td>
+        <td><a href="/item/edit/{{ .Id }}">edit</a></td>
+        <td><a href="/api/item/delete/{{ .Id }}">delete</a></td>
     </tr>
     {{ end }}
 

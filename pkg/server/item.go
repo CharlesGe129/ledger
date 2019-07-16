@@ -35,6 +35,26 @@ func GetItems(c *gin.Context) (items []models.Item) {
 	return
 }
 
+func ItemIndex(c *gin.Context) {
+	c.HTML(http.StatusOK, "item_index.tmpl", gin.H{
+		"items": GetItems(c),
+	})
+}
+
+func ItemNew(c *gin.Context) {
+	c.HTML(http.StatusOK, "item_new.tmpl", gin.H{
+		"item": models.Item{},
+		"categories": GetCategories(c),
+	})
+}
+
+func ItemUpdate(c *gin.Context) {
+	c.HTML(http.StatusOK, "item_new.tmpl", gin.H{
+		"item": GetApiItem(c),
+		"categories": GetCategories(c),
+	})
+}
+
 func GetApiItems(c *gin.Context) {
 	var items []models.Item
 	db := database.GetDB()
@@ -53,11 +73,10 @@ func GetApiItem(c *gin.Context) (item models.Item) {
 	}
 	db := database.GetDB()
 	if err := db.Preload("Category").
-		Where("item.id = ?", id).
+		Where("items.id = ?", id).
 		Find(&item).Error; err != nil {
 		fmt.Printf("err=%s\n", err)
 	}
-	c.JSON(http.StatusOK, item)
 	return
 }
 
@@ -89,4 +108,18 @@ func PutApiItem(c *gin.Context) {
 		fmt.Printf("err=%s\n", err)
 	}
 	c.JSON(http.StatusOK, item)
+}
+
+func DeleteApiItem(c *gin.Context) {
+	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
+	if err != nil {
+		fmt.Printf("err=%s\n", err)
+		return
+	}
+	db := database.GetDB()
+	if err := db.Where("id = ?", id).
+		Delete(&models.Item{}).Error; err != nil {
+		fmt.Printf("err=%s\n", err)
+	}
+	c.Redirect(http.StatusMovedPermanently, "/item")
 }
