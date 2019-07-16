@@ -76,6 +76,7 @@ func PostApiItem(c *gin.Context) {
 	if err := db.Create(&item).Error; err != nil {
 		fmt.Printf("err=%s\n", err)
 	}
+	c.Redirect(http.StatusMovedPermanently, "/item")
 }
 
 func PutApiItem(c *gin.Context) {
