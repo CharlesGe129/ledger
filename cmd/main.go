@@ -6,7 +6,9 @@ import (
 	"ledger/pkg/database"
 	"ledger/pkg/models"
 	"ledger/pkg/server"
+	"html/template"
 	"net/http"
+	"time"
 )
 
 var db *gorm.DB
@@ -44,8 +46,16 @@ func catIndex(c *gin.Context) {
 	})
 }
 
+func formatAsDate(t time.Time) string {
+	return t.Format("2006-01-02")
+}
+
 func main() {
 	r := gin.Default()
+
+	r.SetFuncMap(template.FuncMap{
+		"formatAsDate": formatAsDate,
+	})
 	r.LoadHTMLGlob("templates/*")
 
 	database.GetDB()

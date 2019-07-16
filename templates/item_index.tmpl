@@ -22,7 +22,7 @@
         <td>{{ .Name }}</td>
         <td>{{ .Amount }}</td>
         <td>{{ .Category.Name }}</td>
-        <td>{{ .CreatedAt }}</td>
+        <td>{{ .CreatedAt | formatAsDate }}</td>
     </tr>
     {{ end }}
 
