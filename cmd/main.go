@@ -55,11 +55,14 @@ func main() {
 	r.GET("/item/new", itemNew)
 	r.PUT("/item/update", itemUpdate)
 
-	r.GET("/api/item", server.GetApiItems)
-	r.POST("/api/item", server.PostApiItem)
-	r.PUT("/api/item", server.PutApiItem)
+	apiRoutes := r.Group("/api")
+	{
+		apiRoutes.GET("/item", server.GetApiItems)
+		apiRoutes.POST("/item", server.PostApiItem)
+		apiRoutes.PUT("/item", server.PutApiItem)
 
-	r.GET("/api/cats", server.GetCats)
+		apiRoutes.GET("/cats", server.GetCats)
+	}
 	//r.POST("/api/category", server.CreateCategories)
 
 	r.Run(":9099")
